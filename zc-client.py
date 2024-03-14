@@ -75,8 +75,7 @@ class ZachCoinClient (Node):
                     self.blockchain = data['blockchain']
                 elif data['type'] == self.UTXPOOL:
                     self.utx = data['utxpool']
-                    print([utx for utx in self.utx if self.validate_transaction(utx)])
-                    #self.utx = [utx for utx in data['utxpool'] if self.validate_transaction(utx)]
+                    self.utx = [utx for utx in self.utx if self.validate_transaction(utx)]
                 elif data['type'] == self.BLOCK:
                     if self.validate_block(data):
                         self.blockchain.append(data)
@@ -123,7 +122,7 @@ class ZachCoinClient (Node):
         for block in self.blockchain:
             if block['tx']['input']['id'] == tx['input']['id'] and block['tx']['input']['n'] == tx['input']['n']:
                 return False
-        # check all outputs positive integers
+        # check all outputs values positive integers
         if any([not isinstance(output['value'], int) or output['value'] < 0 for output in tx['output']]):
             return False
         # check correct num outputs
@@ -325,8 +324,6 @@ def main():
             client.create_transaction(sk, vk)
         elif x == 4:
             client.mine(vk)
-        # TODO: Add options for creating and mining transactions
-        # as well as any other additional features
 
         input()
         
