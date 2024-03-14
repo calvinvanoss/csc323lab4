@@ -175,7 +175,7 @@ class ZachCoinClient (Node):
 
         # list outputs and select one
         for i, output in enumerate(outputs):
-            print(i, '|', output[2], '\n')
+            print(i, '|', output[2], '|', output[0], '\n')
         x = input("Enter the number of the output you want to spend: ")
         if x == "":
             return
